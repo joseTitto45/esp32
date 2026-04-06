@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Nexus Domótica</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    
+    <header class="topbar">
+        <div class="topbar-logo">
+            <span class="icono-logo-small">⚡</span>
+            <h1>Nexus</h1>
+        </div>
+        <div class="topbar-derecha">
+            <span id="status-ws" class="status-badge" aria-live="polite">Conectando...</span>
+            <div class="perfil-usuario">
+                <div class="avatar"><span role="img" aria-label="Usuario">👤</span></div>
+                <span id="nombre-usuario" class="nombre-usuario">...</span>
+            </div>
+            <button id="boton-salir" class="btn-secundario" aria-label="Cerrar sesión">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="contenedor-principal">
+        <header class="header-seccion">
+            <h2>Panel de Dispositivos</h2>
+            <p>Control en tiempo real de tus relés</p>
+        </header>
+
+        <div id="contenedor-reles" class="contenedor-reles-dinamico" aria-live="polite">
+            <!-- Los relés se renderizarán dinámicamente aquí por reles.js -->
+        </div>
+    </main>
+
+    <!-- Socket.io -->
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script type="module" src="js/aplicacion.js"></script>
+</body>
+</html>

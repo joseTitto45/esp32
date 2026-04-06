@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Domótica - Acceso</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+    <div class="vidrio-overlay"></div>
+    <div class="login-contenedor">
+        <div class="login-tarjeta">
+            <div class="login-header">
+                <div class="logo-circulo">
+                  <span class="icono-logo">⚡</span>
+                </div>
+                <h1>Nexus Domótica</h1>
+                <p>Ingresa a tu panel de control</p>
+            </div>
+            
+            <form id="form-login" class="form-login">
+                <div id="error-login" class="error-msg" role="alert" aria-live="assertive">Credenciales incorrectas</div>
+                
+                <div class="grupo-input">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" autocomplete="email" placeholder="usuario@ejemplo.com" required />
+                </div>
+                
+                <div class="grupo-input">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" autocomplete="current-password" placeholder="••••••••" required />
+                </div>
+                
+                <button type="submit" id="boton-ingresar" class="btn-primario">
+                    <span class="texto-btn">Ingresar al sistema</span>
+                    <span class="spinner-btn"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Se carga como un módulo para evitar polución global y usar await -->
+    <script type="module" src="js/aplicacion.js"></script>
+</body>
+</html>
