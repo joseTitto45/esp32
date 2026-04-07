@@ -647,6 +647,66 @@ a {
     color: #fb7185;
 }
 
+/* Botón cerrar sidebar en móvil */
+.sidebar-close {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--txt-mid);
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+    transition: color var(--t-fast);
+}
+
+.sidebar-close:hover {
+    color: var(--txt-hi);
+}
+
+/* Overlay oscuro al abrir sidebar en móvil */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 49;
+    opacity: 0;
+    transition: opacity var(--t-mid);
+}
+
+.sidebar-overlay.visible {
+    opacity: 1;
+}
+
+/* Botón hamburger */
+.hamburger {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--txt-mid);
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--t-fast);
+    flex-shrink: 0;
+}
+
+.hamburger:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+}
+
+/* Header left con hamburger */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 /* === MAIN CONTENT === */
 .main-content {
     margin-left: var(--sidebar-w);
@@ -1179,6 +1239,7 @@ a {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
+    overflow-x: auto; /* Scroll horizontal en tablas en móvil */
 }
 
 .tabla-loading {
@@ -1455,7 +1516,151 @@ tbody td {
     }
 }
 
-/* Scrollbar */
+/* Campo contraseña con ojo — admin forms */
+.pass-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pass-wrap input {
+    width: 100%;
+    padding-right: 38px !important;
+}
+
+.toggle-pass-admin {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--txt-lo);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color var(--t-fast);
+}
+
+.toggle-pass-admin:hover {
+    color: var(--teal);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-w: 0px;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform var(--t-mid);
+        width: 240px;
+        z-index: 50;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-overlay {
+        display: block;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 20px 16px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .clock {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: 1.2rem;
+    }
+
+    /* Grid relés — 1 columna en móvil */
+    .grid-reles {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tarjeta relé más compacta */
+    .tarjeta-rele {
+        padding: 16px;
+    }
+
+    /* Admin tabs scrolleables en móvil */
+    .admin-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        width: 100%;
+        padding-bottom: 2px;
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    /* Formularios en 1 columna */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid .field-group[style*="grid-column"] {
+        grid-column: 1 !important;
+    }
+
+    /* Tablas con scroll horizontal */
+    table {
+        min-width: 500px;
+    }
+
+    /* Modal más ancho en móvil */
+    .modal-card {
+        padding: 24px 20px;
+    }
+
+    /* Toasts en móvil */
+    .toast {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+    }
+
+    /* Brand name en sidebar */
+    .brand-name {
+        flex: 1;
+    }
+}
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -1473,50 +1678,27 @@ tbody td {
     background: var(--txt-lo);
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-@media (max-width: 768px) {
-    :root {
-        --sidebar-w: 0px;
-    }
-
-    .sidebar {
-        transform: translateX(-100%);
-        transition: transform var(--t-mid);
-        width: 220px;
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .main-content {
-        margin-left: 0;
-        padding: 20px 16px;
-    }
-
-    .admin-tabs {
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    .tab-btn {
-        flex: 1;
-        justify-content: center;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .page-title {
-        font-size: 1.2rem;
-    }
-}
-
 @media (max-width: 500px) {
     .login-card {
         padding: 32px 24px 28px;
+        border-radius: var(--radius-md);
+    }
+
+    .login-title {
+        font-size: 1.6rem;
+    }
+
+    .grid-reles {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancelar,
+    .btn-guardar {
+        width: 100%;
+        justify-content: center;
     }
 }
