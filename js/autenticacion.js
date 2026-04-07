@@ -13,7 +13,7 @@ export async function iniciarSesion(correo, password) {
     }
 
     const { token, usuario } = await respuesta.json();
-    localStorage.setItem('token',   token);
+    localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
 }
 
@@ -22,9 +22,9 @@ export async function cerrarSesion() {
         const token = localStorage.getItem('token');
         if (token) {
             await fetch(`${BACKEND_URL}/api/auth/logout`, {
-                method:  'POST',
+                method: 'POST',
                 headers: {
-                    'Content-Type':  'application/json',
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
             });

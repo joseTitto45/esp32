@@ -24,7 +24,7 @@ async function cargarReles() {
 
         for (const [nombreDispositivo, relesList] of Object.entries(grupos)) {
             const enLinea = relesList[0].en_linea;
-            const grupo   = construirGrupo(nombreDispositivo, relesList, enLinea);
+            const grupo = construirGrupo(nombreDispositivo, relesList, enLinea);
             contenedor.appendChild(grupo);
         }
 
@@ -92,10 +92,10 @@ function construirTarjetaRele(rele) {
 
 function iconoRele(nombre) {
     const n = nombre.toLowerCase();
-    if (n.includes('luz') || n.includes('lamp'))   return '💡';
+    if (n.includes('luz') || n.includes('lamp')) return '💡';
     if (n.includes('ventil') || n.includes('fan')) return '🌀';
     if (n.includes('puerta') || n.includes('gate')) return '🚪';
-    if (n.includes('aire') || n.includes('ac'))    return '❄️';
+    if (n.includes('aire') || n.includes('ac')) return '❄️';
     return '⚡';
 }
 
@@ -107,21 +107,26 @@ function asignarEventoBoton(releId) {
 
 async function enviarComando(releId, boton) {
     if (boton.disabled) return;
+    const estadoActual = boton.classList.contains('activo');
+    const nuevoEstado = !estadoActual;
+    actualizarTarjeta(releId, nuevoEstado);
     boton.disabled = true;
     boton.classList.add('cargando');
-
     try {
         await llamarApi(`/api/reles/${releId}/comando`, {
             method: 'POST',
             body: JSON.stringify({ accion: 'alternar' }),
         });
     } catch (err) {
+        actualizarTarjeta(releId, estadoActual);
         mostrarToast(err.message, 'error');
     } finally {
         boton.disabled = false;
         boton.classList.remove('cargando');
     }
 }
+
+
 
 function escucharCambiosSocket() {
     document.addEventListener('rele:cambio', e => {
@@ -145,12 +150,12 @@ function actualizarTarjeta(releId, estado) {
     const tarjeta = document.getElementById(`rele-${releId}`);
     if (!tarjeta) return;
 
-    const boton      = tarjeta.querySelector('.toggle-btn');
+    const boton = tarjeta.querySelector('.toggle-btn');
     const estadoText = tarjeta.querySelector('.estado-texto');
 
     tarjeta.classList.toggle('encendido', estado);
     boton.classList.toggle('activo', estado);
-    boton.dataset.estado  = estado;
+    boton.dataset.estado = estado;
     boton.setAttribute('aria-pressed', estado);
     estadoText.textContent = estado ? 'Encendido' : 'Apagado';
 }
