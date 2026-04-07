@@ -1,46 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Domótica - Acceso</title>
+    <title>Nexus Domótica — Acceso</title>
     <link rel="stylesheet" href="css/estilos.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body class="login-body">
-    <div class="vidrio-overlay"></div>
-    <div class="login-contenedor">
-        <div class="login-tarjeta">
-            <div class="login-header">
-                <div class="logo-circulo">
-                  <span class="icono-logo">⚡</span>
-                </div>
-                <h1>Nexus Domótica</h1>
-                <p>Ingresa a tu panel de control</p>
+
+    <!-- Fondo animado con nodos -->
+    <canvas id="canvas-fondo" aria-hidden="true"></canvas>
+
+    <div class="login-wrapper">
+        <div class="login-deco" aria-hidden="true">
+            <div class="deco-circle c1"></div>
+            <div class="deco-circle c2"></div>
+            <div class="deco-lines">
+                <span></span><span></span><span></span><span></span>
             </div>
-            
-            <form id="form-login" class="form-login">
-                <div id="error-login" class="error-msg" role="alert" aria-live="assertive">Credenciales incorrectas</div>
-                
-                <div class="grupo-input">
-                    <label for="correo">Correo electrónico</label>
-                    <input type="email" id="correo" autocomplete="email" placeholder="usuario@ejemplo.com" required />
+        </div>
+
+        <div class="login-card">
+            <div class="login-logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            <h1 class="login-title">Nexus<br><span>Domótica</span></h1>
+            <p class="login-sub">Acceso al sistema de control</p>
+
+            <form id="form-login" class="form-login" novalidate>
+                <div id="error-login" class="error-banner" role="alert" aria-live="assertive">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span class="error-texto">Credenciales incorrectas</span>
                 </div>
-                
-                <div class="grupo-input">
+
+                <div class="field-group">
+                    <label for="correo">Correo</label>
+                    <div class="field-wrap">
+                        <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                            </path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <input type="email" id="correo" autocomplete="email" placeholder="usuario@ejemplo.com"
+                            required />
+                    </div>
+                </div>
+
+                <div class="field-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" autocomplete="current-password" placeholder="••••••••" required />
+                    <div class="field-wrap">
+                        <svg class="field-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input type="password" id="password" autocomplete="current-password" placeholder="••••••••"
+                            required />
+                        <button type="button" class="toggle-pass" id="toggle-pass" aria-label="Mostrar contraseña"
+                            tabindex="-1">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                
-                <button type="submit" id="boton-ingresar" class="btn-primario">
-                    <span class="texto-btn">Ingresar al sistema</span>
-                    <span class="spinner-btn"></span>
+
+                <button type="submit" id="boton-ingresar" class="btn-login">
+                    <span class="btn-texto">Ingresar al sistema</span>
+                    <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                    <span class="btn-spinner"></span>
                 </button>
             </form>
+
+            <p class="login-version">v2.0 · Nexus ESP32</p>
         </div>
     </div>
 
-    <!-- Se carga como un módulo para evitar polución global y usar await -->
     <script type="module" src="js/aplicacion.js"></script>
+    <script>
+        // Canvas de partículas
+        const canvas = document.getElementById('canvas-fondo');
+        const ctx = canvas.getContext('2d');
+        let pts = [];
+        function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+        function init() {
+            pts = Array.from({ length: 60 }, () => ({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+                r: Math.random() * 1.5 + 0.5
+            }));
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pts.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(99,200,180,0.5)'; ctx.fill();
+            });
+            pts.forEach((a, i) => pts.slice(i + 1).forEach(b => {
+                const d = Math.hypot(a.x - b.x, a.y - b.y);
+                if (d < 120) {
+                    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+                    ctx.strokeStyle = `rgba(99,200,180,${0.15 * (1 - d / 120)})`; ctx.lineWidth = 0.5; ctx.stroke();
+                }
+            }));
+            requestAnimationFrame(draw);
+        }
+        resize(); init(); draw();
+        window.addEventListener('resize', () => { resize(); init(); });
+
+        // Toggle password
+        document.getElementById('toggle-pass').addEventListener('click', () => {
+            const inp = document.getElementById('password');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+        });
+    </script>
 </body>
+
 </html>

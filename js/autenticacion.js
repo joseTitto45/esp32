@@ -31,7 +31,7 @@ export async function cerrarSesion() {
         }
     } finally {
         localStorage.clear();
-        window.location.href = '/login.html';
+        window.location.href = '/esp32/login.html';
     }
 }
 
@@ -42,7 +42,7 @@ export function obtenerUsuario() {
 
 export function requiereAutenticacion() {
     if (!localStorage.getItem('token')) {
-        window.location.href = '/login.html';
+        window.location.href = '/esp32/login.html';
         return false;
     }
     return true;
@@ -50,6 +50,6 @@ export function requiereAutenticacion() {
 
 export function redirigirSiAutenticado() {
     if (localStorage.getItem('token')) {
-        window.location.href = '/index.html';
+        window.location.href = '/esp32/panel.html';
     }
 }

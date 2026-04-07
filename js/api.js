@@ -16,7 +16,7 @@ export async function llamarApi(ruta, opciones = {}) {
 
     if (respuesta.status === 401) {
         localStorage.clear();
-        window.location.href = '/login.html';
+        window.location.href = '/esp32/login.html';
         return;
     }
 

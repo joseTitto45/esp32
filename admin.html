@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración — Nexus</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="dashboard-body">
+
+    <nav class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            </div>
+            <span class="brand-name">Nexus</span>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="panel.html" class="nav-item" aria-label="Panel principal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>Panel</span>
+            </a>
+            <a href="admin.html" class="nav-item active" aria-label="Administración">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path
+                        d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M20.49 12H22M2 12h1.51M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M12 20.49V22M12 2v1.51">
+                    </path>
+                </svg>
+                <span>Admin</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div id="status-ws" class="ws-status">
+                <span class="ws-dot"></span>
+                <span class="ws-label">Conectando</span>
+            </div>
+            <div class="usuario-mini">
+                <div class="usuario-avatar" id="usuario-inicial">?</div>
+                <span class="usuario-nombre" id="nombre-usuario">...</span>
+            </div>
+            <button id="boton-salir" class="btn-logout" aria-label="Cerrar sesión" title="Cerrar sesión">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">Administración</h1>
+                <p class="page-subtitle">Gestión de usuarios y dispositivos</p>
+            </div>
+        </header>
+
+        <!-- TABS -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="usuarios">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                Usuarios
+            </button>
+            <button class="tab-btn" data-tab="puertos">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                Puertos / Relés
+            </button>
+            <button class="tab-btn" data-tab="dispositivos">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                    <rect x="9" y="9" width="6" height="6"></rect>
+                    <line x1="9" y1="2" x2="9" y2="4"></line>
+                    <line x1="15" y1="2" x2="15" y2="4"></line>
+                    <line x1="9" y1="20" x2="9" y2="22"></line>
+                    <line x1="15" y1="20" x2="15" y2="22"></line>
+                    <line x1="20" y1="9" x2="22" y2="9"></line>
+                    <line x1="20" y1="14" x2="22" y2="14"></line>
+                    <line x1="2" y1="9" x2="4" y2="9"></line>
+                    <line x1="2" y1="14" x2="4" y2="14"></line>
+                </svg>
+                Dispositivos
+            </button>
+        </div>
+
+        <!-- ===== TAB: USUARIOS ===== -->
+        <section class="tab-panel active" id="tab-usuarios">
+            <div class="panel-header">
+                <h2 class="panel-title">Gestión de Usuarios</h2>
+                <button class="btn-accion" id="btn-nuevo-usuario">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nuevo usuario
+                </button>
+            </div>
+
+            <!-- Formulario crear usuario -->
+            <div class="form-card" id="form-nuevo-usuario" style="display:none">
+                <h3 class="form-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Nuevo Usuario
+                </h3>
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label for="u-nombre">Nombre completo</label>
+                        <input type="text" id="u-nombre" placeholder="Ej: María García" />
+                    </div>
+                    <div class="field-group">
+                        <label for="u-correo">Correo electrónico</label>
+                        <input type="email" id="u-correo" placeholder="usuario@ejemplo.com" />
+                    </div>
+                    <div class="field-group">
+                        <label for="u-password">Contraseña</label>
+                        <input type="password" id="u-password" placeholder="Mínimo 8 caracteres" />
+                    </div>
+                    <div class="field-group">
+                        <label for="u-rol">Rol</label>
+                        <select id="u-rol">
+                            <option value="usuario">Usuario — controla relés</option>
+                            <option value="lectura">Lectura — solo visualiza</option>
+                            <option value="admin">Admin — acceso total</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-cancelar" id="btn-cancelar-usuario">Cancelar</button>
+                    <button class="btn-guardar" id="btn-guardar-usuario">
+                        <span class="btn-texto">Crear usuario</span>
+                        <span class="btn-spinner"></span>
+                    </button>
+                </div>
+                <div id="msg-usuario" class="form-msg"></div>
+            </div>
+
+            <!-- Tabla usuarios -->
+            <div class="tabla-wrap">
+                <div id="tabla-usuarios-contenido">
+                    <div class="tabla-loading">
+                        <span class="spinner-tabla"></span>
+                        <span>Cargando usuarios...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: PUERTOS / RELÉS ===== -->
+        <section class="tab-panel" id="tab-puertos">
+            <div class="panel-header">
+                <h2 class="panel-title">Puertos / Relés</h2>
+                <button class="btn-accion" id="btn-nuevo-rele">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nuevo relé
+                </button>
+            </div>
+
+            <!-- Formulario crear relé -->
+            <div class="form-card" id="form-nuevo-rele" style="display:none">
+                <h3 class="form-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    Nuevo Puerto / Relé
+                </h3>
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label for="r-dispositivo">Dispositivo (ESP32)</label>
+                        <select id="r-dispositivo">
+                            <option value="">— Seleccionar dispositivo —</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label for="r-pin">Pin GPIO</label>
+                        <select id="r-pin">
+                            <option value="">— Seleccionar pin —</option>
+                            <option value="2">GPIO 2</option>
+                            <option value="4">GPIO 4</option>
+                            <option value="5">GPIO 5</option>
+                            <option value="12">GPIO 12</option>
+                            <option value="13">GPIO 13</option>
+                            <option value="14">GPIO 14</option>
+                            <option value="15">GPIO 15</option>
+                            <option value="16">GPIO 16</option>
+                            <option value="17">GPIO 17</option>
+                            <option value="18">GPIO 18</option>
+                            <option value="19">GPIO 19</option>
+                            <option value="21">GPIO 21</option>
+                            <option value="22">GPIO 22</option>
+                            <option value="23">GPIO 23</option>
+                            <option value="25">GPIO 25</option>
+                            <option value="26">GPIO 26</option>
+                            <option value="27">GPIO 27</option>
+                            <option value="32">GPIO 32</option>
+                            <option value="33">GPIO 33</option>
+                        </select>
+                    </div>
+                    <div class="field-group">
+                        <label for="r-nombre">Nombre del relé</label>
+                        <input type="text" id="r-nombre" placeholder="Ej: Luz sala principal" />
+                    </div>
+                    <div class="field-group">
+                        <label for="r-descripcion">Descripción <span class="campo-opcional">(opcional)</span></label>
+                        <input type="text" id="r-descripcion" placeholder="Ej: Controla la lámpara principal" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-cancelar" id="btn-cancelar-rele">Cancelar</button>
+                    <button class="btn-guardar" id="btn-guardar-rele">
+                        <span class="btn-texto">Crear relé</span>
+                        <span class="btn-spinner"></span>
+                    </button>
+                </div>
+                <div id="msg-rele" class="form-msg"></div>
+            </div>
+
+            <!-- Tabla relés -->
+            <div class="tabla-wrap">
+                <div id="tabla-reles-contenido">
+                    <div class="tabla-loading">
+                        <span class="spinner-tabla"></span>
+                        <span>Cargando relés...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: DISPOSITIVOS ===== -->
+        <section class="tab-panel" id="tab-dispositivos">
+            <div class="panel-header">
+                <h2 class="panel-title">Dispositivos ESP32</h2>
+                <button class="btn-accion" id="btn-nuevo-dispositivo">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nuevo ESP32
+                </button>
+            </div>
+
+            <!-- Formulario crear dispositivo -->
+            <div class="form-card" id="form-nuevo-dispositivo" style="display:none">
+                <h3 class="form-card-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                    </svg>
+                    Nuevo Dispositivo ESP32
+                </h3>
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label for="d-nombre">Nombre del dispositivo</label>
+                        <input type="text" id="d-nombre" placeholder="Ej: ESP32-sala" />
+                    </div>
+                    <div class="field-group">
+                        <label for="d-descripcion">Descripción <span class="campo-opcional">(opcional)</span></label>
+                        <input type="text" id="d-descripcion" placeholder="Ej: ESP32 instalado en sala de estar" />
+                    </div>
+                    <div class="field-group" style="grid-column: 1/-1">
+                        <label for="d-token">Token MQTT <span class="campo-opcional">(dejar vacío para generar
+                                automático)</span></label>
+                        <input type="text" id="d-token" placeholder="Se generará automáticamente si se deja vacío" />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-cancelar" id="btn-cancelar-dispositivo">Cancelar</button>
+                    <button class="btn-guardar" id="btn-guardar-dispositivo">
+                        <span class="btn-texto">Crear dispositivo</span>
+                        <span class="btn-spinner"></span>
+                    </button>
+                </div>
+                <div id="msg-dispositivo" class="form-msg"></div>
+            </div>
+
+            <!-- Tabla dispositivos -->
+            <div class="tabla-wrap">
+                <div id="tabla-dispositivos-contenido">
+                    <div class="tabla-loading">
+                        <span class="spinner-tabla"></span>
+                        <span>Cargando dispositivos...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal confirmación eliminar -->
+    <div class="modal-overlay" id="modal-eliminar" style="display:none">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                </svg>
+            </div>
+            <h3 id="modal-titulo">¿Eliminar este elemento?</h3>
+            <p id="modal-descripcion" class="modal-desc">Esta acción no se puede deshacer.</p>
+            <div class="modal-actions">
+                <button class="btn-cancelar" id="modal-cancelar">Cancelar</button>
+                <button class="btn-eliminar" id="modal-confirmar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script type="module" src="js/aplicacion.js"></script>
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>
