@@ -107,15 +107,28 @@ function asignarEventoBoton(releId) {
 
 async function enviarComando(releId, boton) {
     if (boton.disabled) return;
+    
+    // Obtener estado actual (viene como string 'true' o 'false' en el DOM)
+    const estadoActual = (boton.dataset.estado === 'true');
+    const nuevoEstado = !estadoActual;
+    
+    // 1. Actualización visual "Optimista" (Inmediata)
+    actualizarTarjeta(releId, nuevoEstado);
+
+    // 2. Bloqueamos el botón y mostramos carga invisible
     boton.disabled = true;
     boton.classList.add('cargando');
 
     try {
+        // Ejecutamos la petición en segundo plano
         await llamarApi(`/api/reles/${releId}/comando`, {
             method: 'POST',
             body:   JSON.stringify({ accion: 'alternar' }),
         });
+        // Si sale bien, no hacemos nada más, el estado ya se actualizó.
     } catch (err) {
+        // 3. Fallo el backend/internet: Revertir visualmente y mostrar error.
+        actualizarTarjeta(releId, estadoActual);
         mostrarToast(err.message, 'error');
     } finally {
         boton.disabled = false;
