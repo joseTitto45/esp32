@@ -783,6 +783,7 @@ a {
     opacity: 0;
     transition: opacity var(--t-mid);
     background: radial-gradient(circle at 50% 0%, rgba(15, 214, 180, 0.05), transparent 60%);
+    pointer-events: none; /* No interceptar clicks del toggle button */
 }
 
 .tarjeta-rele:hover {
@@ -807,6 +808,7 @@ a {
     right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--teal), transparent);
+    pointer-events: none; /* No interceptar clicks */
 }
 
 .tarjeta-header {
@@ -888,6 +890,7 @@ a {
     background: var(--bg-base);
     border: 1px solid var(--border-hi);
     position: relative;
+    z-index: 1; /* Siempre encima de los overlays decorativos de la tarjeta */
     transition: background var(--t-mid), border-color var(--t-mid), box-shadow var(--t-mid);
 }
 
