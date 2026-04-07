@@ -108,8 +108,8 @@ function asignarEventoBoton(releId) {
 async function enviarComando(releId, boton) {
     if (boton.disabled) return;
     
-    // Obtener estado actual (viene como string 'true' o 'false' en el DOM)
-    const estadoActual = (boton.dataset.estado === 'true');
+    // Usamos el estado VISUAL del botón en lugar del data-estado para evitar bugs de tipos ("true" vs "1")
+    const estadoActual = boton.classList.contains('activo');
     const nuevoEstado = !estadoActual;
     
     // 1. Actualización visual "Optimista" (Inmediata)
